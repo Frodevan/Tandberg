@@ -1,0 +1,45 @@
+This is an interface for use with the TDC3000 tape drive,
+for use between the computer and formatter. It contains:
+
+    * An MC6800 CPU on a 921.6KHz crystal oscillator
+    * 2 KB ROM of type 2708
+    * 1.25 KB RAM of type 2112A-4
+    * An MC6850 UART on a MC14411 clock source
+
+    The CPU uses an inverting data-bus transceiver, so all
+    data written/read is inverted. As such, the ROM dump
+    presented here is as the binary appears directly from the
+    IC themselves, and will as such not render any readable
+    dissasembled 6800-code without the mentioned inversion.
+
+
+Memory map:
+
+    $0000 - $0018   TDC-3000 Formatter board
+    $0100 - $0101   UART
+    $0200 - $06FF   RAM
+    $7C00 - $83FF   ROM
+    $FC00 - $FFFF   ROM mirror of $8000 - $83FF
+
+    Note, there may be more mirroring, but these are the
+    addresses that are used by the firmware.
+
+
+When looking from behind, towards the back of the drive cabinet:
+
+    * The left DB-25M connector is RS-232
+    * Five switches likely set handshake and data-format
+    * The right DB-25F connector seems to be current-loop
+
+It is likely that the firmware in ROM implements some sort of
+command-set the computer can use to access the tape drive.
+
+
+---------------------------------------------------------------
+
+
+Some responses from firmware:
+
+    #DU     Fatal error
+    #PX     Parity error
+    #OV     Overrun error
